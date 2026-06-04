@@ -7,6 +7,7 @@
     <x-card>
         @forelse ($emailLists as $list)
 
+            fazer a lista
             {{-- fazer a lista --}}
             @empty
                 <div class="flex justify-center">
