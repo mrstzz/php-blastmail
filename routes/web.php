@@ -6,6 +6,8 @@ use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use function Pest\Laravel\delete;
+
 // Route::view('/', 'welcome');
 
 Route::view('/', function(){
@@ -31,6 +33,7 @@ Route::middleware('auth')->group(function () {
     // Subscriber
     Route::get('/email-list/{emailList}/subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
     Route::get('/email-list/{emailList}/subscribers/create', fn()=> '' )->name('subscribers.create');
+    Route::delete('/email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
 
 
 });

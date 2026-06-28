@@ -1,16 +1,26 @@
 @props([
-    'post' => null
+    'post' => null,
+    'delete' => null,
+    'flat' => false
 ])
 
 @php
-    $method = $post ? 'POST' : 'GET';
+    $method = ($post or $delete) ? 'POST' : 'GET';
 @endphp
 
-<form method="{{ $method }}" {{ $attributes->class(['gap-4 flex flex-col']) }}>
+<form {{ $attributes->class(['gap-4 flex flex-col' => !$flat])  }} method="{{ $method }}" >
     
-    @if($method === 'POST')
+    @if($method != 'GET')
         @csrf
     @endif
+
+
+    @if ($delete)
+        @method('DELETE')
+    @endif
+
+
+
 
     {{ $slot }}
     
