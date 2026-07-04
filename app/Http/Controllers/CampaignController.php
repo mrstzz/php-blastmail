@@ -25,10 +25,10 @@ class CampaignController extends Controller
         ]);
     }
 
-    function create()
+    function create(?string $tab = null) 
     {
         return view('campaigns.create',[
-            'templates' => Template::all()
+            'tab' => $tab,
         ]);
     }
 
