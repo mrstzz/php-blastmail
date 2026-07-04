@@ -14,7 +14,7 @@ class TemplateController extends Controller
         $search = request()->get('search',null);
         $withTrashed = request()->get('withTrashed',false);
 
-        return view('template.index',[
+        return view('templates.index',[
             'templates' => Template::query()
             ->when($withTrashed,fn(Builder $query) =>$query->withTrashed())
             ->when($search,fn(Builder $query) => $query->where('name','like',"%$search%")->orWhere('id','=',"$search"))
@@ -28,7 +28,7 @@ class TemplateController extends Controller
 
     public function create()
     {
-        return view('template.create');
+        return view('templates.create');
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class TemplateController extends Controller
 
         Template::create($data);
 
-        return to_route('template.index')->with('message',__('Template successfully created!'));
+        return to_route('templates.index')->with('message',__('Template successfully created!'));
         
 
 
@@ -49,12 +49,12 @@ class TemplateController extends Controller
 
     public function show(Template $template)
     {
-        return view('template.show',$template);
+        return view('templates.show',['template' => $template]);
     }
 
     public function edit(Template $template)
     {
-        return view('template.edit',[
+        return view('templates.edit',[
             'template' => $template
         ]);
         
@@ -83,7 +83,7 @@ class TemplateController extends Controller
         
         $template->delete();
 
-        return to_route('template.index')->with('message',__('Template successfully created!'));
+        return to_route('templates.index')->with('message',__('Template successfully created!'));
 
 
     }

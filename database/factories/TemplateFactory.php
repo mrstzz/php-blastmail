@@ -18,7 +18,9 @@ class TemplateFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
+            'body' => fake()->sentences(3, true),
+            
         ];
     }
 }
