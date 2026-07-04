@@ -32,15 +32,17 @@
                         <x-table.td class="w-1" >
 
                             <div class="flex items-center space-x-4" >
-                                <x-button.link secondary :href="route('campaigns.show', $campaign)"> {{ __('Preview') }} </x-button.link>
-                                <x-button.link secondary :href="route('campaigns.edit', $campaign)"> {{ __('Edit') }} </x-button.link>
-
+                    
                                 @unless ($campaign->trashed())
                                     <x-form :action="route('campaigns.destroy', $campaign)" delete flat onsubmit="return confirm('{{ __('Are you sure?') }}')">
                                         <x-button.secondary type="submit">{{ __('Delete') }} </x-button.secondary>
                                     </x-form>
                                     
                                 @else
+
+                                    <x-form :action="route('campaigns.restore', $campaign)" patch flat onsubmit="return confirm('{{ __('Are you sure?') }}')">
+                                        <x-button.secondary danger type="submit">{{ __('Restore') }} </x-button.secondary>
+                                    </x-form>
                                     <x-badge danger >{{ __('Deleted') }} 
                                         
                                     </x-badge>
