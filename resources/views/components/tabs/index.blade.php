@@ -20,8 +20,7 @@
         @endforeach
     </div>
 
-    <div class="px-2 py-4 text-neutral-600 dark:text-neutral-300">
+    <div class="px-2 py-4 text-neutral-600 dark:text-dark-400">
         {{ $slot }}
     </div>
 </div>
-		<button x-on:click="selectedTab = 'groups'" x-bind:aria-selected="selectedTab === 'groups'" x-bind:tabindex="selectedTab === 'groups' ? '0' : '-1'" x-bind:class="selectedTab === 'groups' ? 'font-bold text-primary border-b-2 border-primary dark:border-primary-dark dark:text-primary-dark' : 'text-on-surface font-medium dark:text-on-surface-dark dark:hover:border-b-outline-dark-strong dark:hover:text-on-surface-dark-strong hover:border-b-2 hover:border-b-outline-strong hover:text-on-surface-strong'" class="h-min px-4 py-2 text-sm" type="button" role="tab" aria-controls="tabpanelGroups" >Groups</button>
