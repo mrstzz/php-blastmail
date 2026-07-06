@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CampaignStoreRequest;
 use App\Models\Campaign;
 use Illuminate\Http\Request;
 use App\Models\Template;
@@ -52,64 +53,16 @@ class CampaignController extends Controller
         ]);
     }
 
-    function store(?string $tab = null)
+    function store(CampaignStoreRequest $request, ?string $tab = null)
     {
 
-        $toRoute = '';
-        $map = array_merge([
-            'name' => null,
-            'subject' => null,
-            'email_list_id' => null,
-            'template_id' => null,
-            'body' => null,
-            'track_click' => null,
-            'track_open' => null,
-            'send_at' => null
-        ], request()->all());
+        $data = $request->getData();
+        $toRoute = $request->getToRoute();
 
 
-
-        if(blank($tab)){
-            // ta vindo do index, então redireciona para o /create = aba n°1
-
-            request()->validate([
-                'name' => ['required','string','max:255'],
-                'subject' => ['required','string','max:40'],
-                'email_list_id' => ['nullable'],
-                'template_id' => ['nullable'],
-            ]);
-
-            $toRoute = route('campaigns.create',['tab'=> 'template']);
+        if($tab == 'schedule'){
+            Campaign::create($data);
         }
-
-        if($tab === 'template'){
-            request()->validate([
-                'body' => ['required','string'],
-            ]);
-
-            $toRoute = route('campaigns.create',['tab'=> 'schedule']);
-        }
-
-        $session = session()->get('campaigns::create',[]);
-        foreach($session as $key => $value) {
-            $newValue = data_get($map, $key);
-
-            if (filled($newValue)) {
-                $session[$key] = $newValue;
-            }
-        }
-
-
-        if($tab === 'schedule'){
-            request()->validate([
-                'send_at' => ['required','date'],
-            ]);
-
-            $toRoute = route('campaigns.index');
-
-        }
-
-        session()->put('campaigns::create',$session);
 
         return response()->redirectTo($toRoute);
 

@@ -1,8 +1,6 @@
 {{-- template --}}
 
 
-@dump($data['body'])
-
 <div>
    <div>
         <x-input.richtext name="body" :value="old('body', $data['body'])"/>
