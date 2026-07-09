@@ -51,7 +51,7 @@
     </div>
 
     <div>
-        <x-input.checkbox id="track_open" name="track_open" autofocus value="1" :isCheckedWhen="old('track_open', $data['track_open'])" :label="__('Track Open  ')" />
+        <x-input.checkbox id="track_open" name="track_open" autofocus value="1" :isCheckedWhen="old('track_open', $data['track_open'])" :label="__('Track Open')" />
         <x-input-error :messages="$errors->get('track_open')" class="mt-2" />
     </div>
 
