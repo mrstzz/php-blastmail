@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CampaignStoreRequest;
+use App\Jobs\SendEmailCampaign;
 use App\Mail\EmailCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
 use Illuminate\Http\Request;
 use App\Models\Template;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Traits\Conditionable;
@@ -85,9 +87,8 @@ class CampaignController extends Controller
             $campaign = Campaign::create($data);
 
             // n pode travar nesse loop
-            foreach($campaign->emailList->subscribers as $subscriber){
-                Mail::to($subscriber->email)->send(new EmailCampaign($campaign));
-            }
+          SendEmailCampaign::dispatchAfterResponse($campaign);
+          
         }
 
         return response()->redirectTo($toRoute);
