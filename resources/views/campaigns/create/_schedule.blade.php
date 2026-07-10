@@ -6,14 +6,14 @@
 
     <x-alert success :title="__('Your Campaign is ready to be sent')"/>
 
-    <div>
-        <div>De:----@----</div>
-        <div>Para:#count de emails do email list</div>
-        <div>Assunto: assunto do email</div>
-        <div>Template: template do email</div>
+    <div class="space-y-2">
+        <div>{{ __('From') }}: {{ config('mail.from.address') }}</div>
+        <div>{{ __('To') }}: <x-badge >{{ $countEmails }} Emails</x-badge></div>
+        <div>{{ __('Subject') }}: {{ $data['subject'] }}</div>
+        <div>{{ __('Template') }}: <x-badge>{{ $template }}</x-badge></div>
     </div>
 
-    <hr/>
+    <hr class="my-4 opacity-60"/>
 
     
 
