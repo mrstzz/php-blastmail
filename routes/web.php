@@ -6,7 +6,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Middleware\CampaignCreateSessionControl;
+use App\Mail\EmailCampaign;
+use App\Models\Campaign;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 use function Pest\Laravel\delete;
@@ -50,6 +53,12 @@ Route::middleware('auth')->group(function () {
     
     Route::patch('/campaigns/{campaign}/restore', [CampaignController::class, 'restore'])->withTrashed()->name('campaigns.restore');
 
+    Route::get('/campaigns/{campaign}/emails', function(Campaign $campaign){
+
+      
+
+        return (new EmailCampaign($campaign))->render();
+    });
 
 });
 
