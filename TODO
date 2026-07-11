@@ -4,6 +4,7 @@ Todo:
     ✔ aberto: /campaigns/{campaign}/open @done(26-07-11 00:32)
     ✔ clicados: /campaigns/{campaign}/clicked @done(26-07-11 00:32)
   Layouts:
+    ✔ show.blade.php @done(26-07-11 14:44)
     ☐ tela de estatísticas
     ☐ tela de aberto
     ☐ tela de clicados
