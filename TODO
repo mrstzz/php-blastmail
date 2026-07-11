@@ -1,0 +1,22 @@
+Todo:
+  Rotas:
+    ✔ estatísticas: /campaigns/{campaign}/statistics @done(26-07-11 00:32)
+    ✔ aberto: /campaigns/{campaign}/open @done(26-07-11 00:32)
+    ✔ clicados: /campaigns/{campaign}/clicked @done(26-07-11 00:32)
+  Layouts:
+    ☐ tela de estatísticas
+    ☐ tela de aberto
+    ☐ tela de clicados
+  Backend:
+    ☐ Model
+    ☐ Migration
+    ☐ Seeder
+    ☐ Factory
+  Implementação:
+    ☐ tela de estatísticas
+    ☐ tela de aberto
+    ☐ tela de clicados
+  Como que salvamos:
+    ☐ Rota para o email salvar dados
+    ☐ Rota do click
+    ☐ Mudar o link do click e fazer redirect

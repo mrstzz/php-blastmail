@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CampaignStoreRequest;
 use App\Jobs\SendEmailCampaign;
-use App\Mail\EmailCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
-use Illuminate\Http\Request;
 use App\Models\Template;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Traits\Conditionable;
 
 class CampaignController extends Controller
@@ -30,6 +26,13 @@ class CampaignController extends Controller
             'search'=> $search,
             'withTrashed' => $withTrashed
         ]);
+    }
+
+    public function show(Campaign $campaign, string $what)
+    {
+        abort_unless(in_array($what, ['statistics', 'open', 'clicked']), 404);
+
+        return view('campaigns.show.' . $what);
     }
 
     function create(?string $tab = null) 
