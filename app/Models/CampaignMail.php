@@ -20,4 +20,5 @@ class CampaignMail extends Model
     {
         return $this->belongsTo(Subscriber::class);
     }
+
 }

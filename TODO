@@ -9,10 +9,10 @@ Todo:
     ✔ tela de aberto @done(26-07-11 23:41)
     ✔ tela de clicados @done(26-07-11 23:41)
   Backend:
-    ☐ Model
-    ☐ Migration
-    ☐ Seeder
-    ☐ Factory
+    ✔ Model @done(26-07-12 15:12)
+    ✔ Migration @done(26-07-12 15:12)
+    ✔ Seeder @done(26-07-12 15:12)
+    ✔ Factory @done(26-07-12 15:12)
   Implementação:
     ☐ tela de estatísticas
     ☐ tela de aberto

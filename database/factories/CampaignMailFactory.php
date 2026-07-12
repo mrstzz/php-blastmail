@@ -24,9 +24,8 @@ class CampaignMailFactory extends Factory
             'campaign_id' => Campaign::factory(),
             'subscriber_id' => Subscriber::factory(),
             'sent_at' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
-            'clicks' => $this->faker->numberBetween(1, 10),
-            'openings' => $this->faker->numberBetween(1, 10),
-            CampaignMailSeeder::
+            'clicks' => $this->faker->numberBetween(0, 10),
+            'openings' => $this->faker->numberBetween(0, 10),
         ];
     }
 }

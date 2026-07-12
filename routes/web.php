@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::post('campaigns/create/{tab?}', [CampaignController::class, 'store']);
 
 
-    Route::get('/campaigns/{campaign}/{what?}', [CampaignController::class, 'show'])->name('campaigns.show');
+    Route::get('/campaigns/{campaign}/{what?}', [CampaignController::class, 'show'])->name('campaigns.show')->withTrashed();
     
     
     
