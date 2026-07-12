@@ -4,7 +4,7 @@
     'warning' => null,
     'danger' => null,
     'title',
-    'no-icon' => false
+    'noIcon' => false
 ])
 
 

@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4">
-    <x-alert no-icon success :title="__('Your campaign is ready to be send!')" />
+    <x-alert noIcon success :title="__('Your campaign is ready to be send!')" />
 
     <div class="grid grid-cols-3 gap-5">
         <x-dashboard.card heading="01" subheading="{{ __('Opens') }}" />

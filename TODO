@@ -5,9 +5,9 @@ Todo:
     ✔ clicados: /campaigns/{campaign}/clicked @done(26-07-11 00:32)
   Layouts:
     ✔ show.blade.php @done(26-07-11 14:44)
-    ☐ tela de estatísticas
-    ☐ tela de aberto
-    ☐ tela de clicados
+    ✔ tela de estatísticas @done(26-07-11 23:41)
+    ✔ tela de aberto @done(26-07-11 23:41)
+    ✔ tela de clicados @done(26-07-11 23:41)
   Backend:
     ☐ Model
     ☐ Migration
