@@ -14,15 +14,18 @@
 
         <x-slot name="body">
             
-            <tr>
-                <x-table.td> Jeremias </x-table.td>
-                <x-table.td> 1 </x-table.td>
-                <x-table.td> email@.com </x-table.td>
+             @foreach ($query as $item)
+                <tr>
+                    <x-table.td> {{ $item->subscriber->name }} </x-table.td>
+                    <x-table.td> {{ $item->clicks }} </x-table.td>
+                    <x-table.td> {{ $item->subscriber->email }} </x-table.td>
 
-            </tr>
+                </tr>
+                
+            @endforeach
             
 
         </x-slot>
-
     </x-table>
+    {{ $query->links() }}
 </div>

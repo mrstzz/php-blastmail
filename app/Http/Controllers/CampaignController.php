@@ -41,16 +41,15 @@ class CampaignController extends Controller
         $search = request()->get('search', null);
 
         $query = $campaign->mails()
-            ->with('subscriber')
-            ->when($search, fn(Builder $query) => $query
-            ->whereHas(
-                'subscriber', fn(Builder $query) => $query
-                ->where('name','like',"%$search%")
-                ->orWhere('email','like',"%$search%")
-                )
-            )->orWhere('openings','=',"$search")
-            ->orderByDesc('openings')
+            ->when($what == 'statistics', fn(Builder $query) => $query->statistics())
+            ->when($what == 'open', fn(Builder $query) => $query->openings($search))
+            ->when($what == 'clicked', fn(Builder $query) => $query->clicks($search))
             ->simplePaginate(5)->withQueryString();
+
+        if ($what == 'statistics') {
+            $query = $query->first()->toArray();
+        }
+            
 
         return view('campaigns.show', compact('campaign', 'what', 'search', 'query'));
     }

@@ -9,4 +9,7 @@
         <x-dashboard.card heading="{{ $query['unique_clicks'] }}" subheading="{{ __('Unique Clicks') }}" />
         <x-dashboard.card heading="{{ $query['clicks_rate'] }}%" subheading="{{ __('Clicks Rate') }}" />
     </div>
+
+
+    {{-- {{ $query->links() }} --}}
 </div>
