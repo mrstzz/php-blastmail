@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CampaignShowRequest;
 use App\Http\Requests\CampaignStoreRequest;
-use App\Jobs\SendEmailsCampaign;
+use App\Jobs\SendEmailsCampaignJob;
 use App\Models\Campaign;
 use App\Models\CampaignMail;
 use App\Models\EmailList;
@@ -106,7 +106,7 @@ class CampaignController extends Controller
             $campaign = Campaign::create($data);
 
             // n pode travar nesse loop
-          SendEmailsCampaign::dispatchAfterResponse($campaign);
+          SendEmailsCampaignJob::dispatchAfterResponse($campaign);
           
         }
 

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailsCampaign implements ShouldQueue
+class SendEmailsCampaignJob implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -23,7 +23,7 @@ class SendEmailsCampaign implements ShouldQueue
     {
         foreach($this->campaign->emailList->subscribers as $subscriber){
 
-            SendEmailCampaign::dispatch($this->campaign, $subscriber);
+            SendEmailCampaignJob::dispatch($this->campaign, $subscriber);
 
         }
     }
