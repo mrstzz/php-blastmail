@@ -32,6 +32,9 @@ class EmailCampaign extends Mailable
     {
         return new Content(
             markdown: 'mail.email-campaign',
+            with: [
+                'body' => $this->getBody(),
+            ],
         );
     }
 
@@ -43,5 +46,20 @@ class EmailCampaign extends Mailable
     public function attachments(): array
     {
         return [];
+    }
+
+    public function getBody(): string
+    {
+        $pattern = '/href="([^"]*)"/';
+
+        preg_match_all($pattern, $this->campaign->body, $matches);
+
+        foreach($matches[1] as $index => $oldValue) {
+            $newValue = 'href="' . route('tracking.clicks', ['mail' => $this->mail, 'f' => $oldValue]) . '"';
+
+            $this->campaign->body = str_replace($matches[0][$index], $newValue, $this->campaign->body);
+        }
+
+        return $this->campaign->body;
     }
 }

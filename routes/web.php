@@ -21,23 +21,12 @@ use function Pest\Laravel\delete;
 
 
 Route::get('/email', function() {
-    $campaign = Campaign::find(14);
+    $campaign = Campaign::find(11);
 
     $mail = $campaign->mails()->first();
-
-    $pattern = '/href="([^"]*)"/';
-
-    preg_match_all($pattern, $campaign->body, $matches);
-
-    foreach($matches[1] as $index => $oldValue) {
-        $newValue = 'href="' . route('tracking.clicks', ['mail' => $mail, 'f' => $oldValue]) . '"';
-
-        $campaign->body = str_replace($matches[0][$index], $newValue, $campaign->body);
-    }
-
     $email = new EmailCampaign($campaign, $mail);
 
-    // SendEmailsCampaignJob::dispatchAfterResponse($campaign);
+    SendEmailsCampaignJob::dispatchAfterResponse($campaign);
 
     return $email->render();
 });
