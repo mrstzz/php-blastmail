@@ -72,7 +72,7 @@ class CampaignStoreRequest extends FormRequest
         $session = session('campaigns::create', $map);
 
         foreach($session as $key => $value) {
-            $newValue = data_get($map, $key);
+            $newValue = data_get($session, $key);
 
             // If the key is track_click or track_open, we want to store the value in the session even if it's null. Otherwise, we only want to store the value if it's not null.
             if ($key == 'track_click' || $key == 'track_open') {

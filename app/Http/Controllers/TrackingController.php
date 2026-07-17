@@ -10,8 +10,16 @@ class TrackingController extends Controller
     public function openings(CampaignMail $mail)
     {
         
-        $mail->openings ++;
-        $mail->save();
+        if($mail->campaign->track_open){
+            $mail->openings ++;
+            $mail->save();
+        }
+
+        return redirect()->away(
+            request()->get('f')
+        );
+
+       
     }
 
 
