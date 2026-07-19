@@ -1,58 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BlastMail
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+BlastMail e um gerenciador de envio de e-mails desenvolvido como desafio pratico durante os estudos com a [Rocketseat](https://rocketseat.com.br).
 
-## About Laravel
+O projeto foi construido com o objetivo de aprimorar os conteudos do percurso **"Laravel: dos fundamentos a pratica em projetos reais"**, aplicando conceitos do framework em uma aplicacao real para cadastro de listas, assinantes, templates, campanhas e acompanhamento de metricas de envio.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+As instrucoes originais do desafio estao disponiveis em:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+[Desafio pratico - Gerenciador de envio de e-mails](https://efficient-sloth-d85.notion.site/Desafio-pr-tico-Gerenciador-de-envio-de-e-mails-6c453201c6434603b6715ce979c64862)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Sobre o projeto
 
-## Learning Laravel
+A aplicacao permite criar e gerenciar campanhas de e-mail a partir de listas de contatos e templates personalizados. Tambem possui recursos para acompanhar aberturas, cliques e estatisticas das campanhas enviadas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Principais funcionalidades:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- autenticacao de usuarios com Laravel Breeze;
+- cadastro de listas de e-mail;
+- cadastro e remocao de assinantes;
+- criacao e edicao de templates;
+- fluxo em etapas para configuracao, conteudo e agendamento de campanhas;
+- envio de campanhas por filas;
+- tracking de abertura e clique;
+- visualizacao de estatisticas da campanha;
+- exclusao e restauracao de campanhas com soft deletes.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Conteudos praticados
 
-## Agentic Development
+Durante o desenvolvimento foram trabalhados os seguintes temas:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- Laravel;
+- estrutura de arquivos do Laravel;
+- migrations;
+- comandos com PHP Artisan;
+- Laravel Form Request;
+- Route Model Binding;
+- politicas e recursos de seguranca do Laravel;
+- Blade Components;
+- estilizadas com Tailwind CSS e Daisy.UI;
+- Laravel Breeze;
+- transactions;
+- servidor de e-mail local MailPit;
+- debugging com Laravel Debugbar.
+
+## Tecnologias
+
+- PHP 8.3+
+- Laravel 13
+- MySQL
+- Laravel Breeze
+- Blade
+- Tailwind CSS
+- Vite
+- Pest
+- MailPit
+- Laravel Debugbar
+
+## Como executar
+
+Clone o repositorio e instale as dependencias:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Crie o arquivo de ambiente e gere a chave da aplicacao:
 
-## Contributing
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Configure o banco de dados no arquivo `.env`:
 
-## Code of Conduct
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blastmail
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Execute as migrations e, se desejar, os seeders:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Inicie a aplicacao:
 
-## License
+```bash
+composer run dev
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Esse comando sobe o servidor Laravel, o worker de filas e o Vite em paralelo.
+
+## E-mails locais
+
+Para testar os envios localmente, utilize o MailPit. Ajuste o `.env` conforme a porta configurada no seu ambiente:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+Depois, acesse a interface web do MailPit, normalmente em:
+
+```text
+http://localhost:8025
+```
+
+## Testes
+
+Para executar a suite de testes:
+
+```bash
+composer test
+```
+
+## Licenca
+
+Este projeto foi desenvolvido para fins de estudo e pratica.
