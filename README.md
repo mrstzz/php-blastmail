@@ -36,7 +36,7 @@ Durante o desenvolvimento foram trabalhados os seguintes temas:
 - Route Model Binding;
 - politicas e recursos de seguranca do Laravel;
 - Blade Components;
-- estilizadas com Tailwind CSS e Daisy.UI;
+- estilizadas com Tailwind CSS e Penguin UI;
 - Laravel Breeze;
 - transactions;
 - servidor de e-mail local MailPit;
