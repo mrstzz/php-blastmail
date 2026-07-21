@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //region Email List
     Route::get('/email-list', [EmailListController::class, 'index'])->name('email-list.index');
     Route::get('/email-list/create', [EmailListController::class, 'create'])->name('email-list.create');
-    Route::post('/email-list/store', [EmailListController::class, 'store']);
+    Route::post('/email-list/store', [EmailListController::class, 'store'])->name('email-list.store');
     //endregion
 
     //region Subscriber

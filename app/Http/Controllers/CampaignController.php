@@ -38,6 +38,7 @@ class CampaignController extends Controller
             return $redirect;
         }
 
+
         $search = request()->get('search', null);
 
         $query = $campaign->mails()
