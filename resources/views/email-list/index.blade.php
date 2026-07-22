@@ -31,8 +31,12 @@
                             <x-table.td class="w-1">{{ $list->id }}</x-table.td>
                             <x-table.td>{{ $list->title }}</x-table.td>
                             <x-table.td>{{ $list->subscribers_count}}</x-table.td>
-                            <x-table.td class="w-1" >
+                            <x-table.td class="flex items-center space-x-4" >
                                 <x-button.link :href="route('subscribers.index', $list)" > Subscribers </x-button.link>
+                                <x-form delete :action="route('email-list.delete', $list)" onsubmit="return confirm('{{ __('Are you sure?') }}')">
+                                    <x-button.secondary type="submit">{{ __('Delete') }} </x-button.secondary>
+                                </x-form>
+
                             </x-table.td>
 
                         </tr>
