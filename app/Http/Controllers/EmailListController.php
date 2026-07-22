@@ -51,7 +51,7 @@ class EmailListController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required','max:256'],
+            'title' => ['required','max:255'],
             'file'  => ['required','file', 'mimes:csv,txt']
         ]);
 
@@ -75,9 +75,14 @@ class EmailListController extends Controller
    
 
         $fileHandle = fopen($file->getRealPath(), 'r');
+        $firstLine = fgets($fileHandle) ?: '';
+        $delimiter = substr_count($firstLine, ';') > substr_count($firstLine, ',') ? ';' : ',';
+
+        rewind($fileHandle);
+
         $items = [];
   
-        while (($row = fgetcsv($fileHandle,null,';')) !== false) {
+        while (($row = fgetcsv($fileHandle, null, $delimiter)) !== false) {
             if($row[0] == 'Name' && $row[1] == 'Email'){
                 continue;
             }
