@@ -1,8 +1,8 @@
 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
     <defs>
         <linearGradient id="blastmail-mark" x1="8" x2="56" y1="10" y2="54" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#10b981" />
-            <stop offset="0.55" stop-color="#2563eb" />
+            <stop stop-color="#" />
+            <stop offset="0.5" stop-color="#" />
             <stop offset="1" stop-color="#111827" />
         </linearGradient>
     </defs>
