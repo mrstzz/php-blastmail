@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Subscriber;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\EmailList;
 
 /**
  * @extends Factory<Subscriber>
@@ -19,7 +20,8 @@ class SubscriberFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'email' => fake()->email
+            'email' => fake()->email,
+            'email_list_id' => EmailList::factory(),
         ];
     }
 }
