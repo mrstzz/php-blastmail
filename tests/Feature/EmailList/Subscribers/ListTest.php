@@ -1,47 +1,41 @@
 <?php
 
-use function Pest\Laravel\get;
-use function Pest\Laravel\getJson;
-
 use App\Models\EmailList;
 use App\Models\Subscriber;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
-BeforeEach(function () {
+use function Pest\Laravel\{get, getJson};
+
+beforeEach(function () {
     $this->emailList = EmailList::factory()->create();
     login();
 });
 
-it('only logged users can access the subscribers', function() {
+it('only logged users can access the subscribers', function () {
     Auth::logout();
     getJson(route('subscribers.index', $this->emailList))
         ->assertUnauthorized();
 });
 
-
 it('should be possible to see the entire list of subscribers', function () {
-    Subscriber::factory()->count(4)->create(0); // other email list
-    Subscriber::factory()->count(10)->create(['email_list_id' => $this->emailList->id,]);
+    Subscriber::factory()->count(4)->create();
 
+    Subscriber::factory()->count(5)->create(['email_list_id' => $this->emailList->id]);
 
     get(route('subscribers.index', $this->emailList))
         ->assertViewHas('emailList', $this->emailList)
-        ->assertViewHas('subscribers', function ($subscribers) {
-            expect($subscribers)->toHaveCount(10);
+        ->assertViewHas('subscribers', function ($value) {
+            expect($value)
+                ->count(5);
 
-            expect($subscribers)
-            ->first()->email_list_id->toBe($this->emailList->id);
+            expect($value)->first()->email_list_id->toBe($this->emailList->id);
 
             return true;
         });
-
 });
 
-
-
-
-it('should be able to search subscribers', function () {
-
+it('should be able to search a subscriber', function () {
     Subscriber::factory()->count(5)->create(['email_list_id' => $this->emailList->id]);
 
     Subscriber::factory()->create([
@@ -71,10 +65,7 @@ it('should be able to search subscribers', function () {
 
             return true;
         });
-
 });
-
-
 
 it('should be able to search by id', function () {
     Subscriber::factory()->create([
@@ -101,9 +92,39 @@ it('should be able to search by id', function () {
         });
 });
 
+it('should be able to show deleted records', function () {
+    Subscriber::factory()->create(['deleted_at' => now()]);
 
+    Subscriber::factory()->create();
 
+    get(route('subscribers.index', ['emailList' => $this->emailList]))
+        ->assertViewHas('subscribers', function ($value) {
+            expect($value)
+                ->count(1);
 
+            return true;
+        });
 
-it('should be able to delete records', function () {})->todo();
-it('should be able to export records', function () {})->todo();
+    get(route('subscribers.index', ['emailList' => $this->emailList, 'withTrashed' => 1]))
+        ->assertViewHas('subscribers', function ($value) {
+            expect($value)
+                ->count(2);
+
+            return true;
+        });
+});
+
+it('should be paginated', function () {
+    Subscriber::factory()->count(30)->create();
+
+    Subscriber::factory()->create();
+
+    get(route('subscribers.index', ['emailList' => $this->emailList]))
+        ->assertViewHas('subscribers', function ($value) {
+
+            expect($value)->count(15);
+            expect($value)->toBeInstanceOf(LengthAwarePaginator::class);
+
+            return true;
+        });
+});
