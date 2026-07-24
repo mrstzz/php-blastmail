@@ -1,65 +1,54 @@
 <?php
 
-namespace Tests\Feature\EmailList;
-
 use Illuminate\Http\UploadedFile;
-use Tests\TestCase;
+use function Pest\Laravel\{post, assertDatabaseHas};
+pest()->group('email-list');
 
-class CreateTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
+beforeEach(function () {
+    login();
+});
 
-        $this->login();
-    }
+test('title should be required', function () {
+    post(route('email-list.store'), [])
+        ->assertSessionHasErrors(['title' => 'The title field is required.']);
+});
 
-    public function test_title_should_be_required()
-    {
-        $this->post(route('email-list.store'), [])
-            ->assertSessionHasErrors(['title' => 'The title field is required.']);
-    }
+test('title should have a max of 255 characters', function () {
+    post(route('email-list.store'), ['title' => str_repeat('*', 256)])
+        ->assertSessionHasErrors(['title' => 'The title field must not be greater than 255 characters.']);
+});
 
-    public function test_title_should_have_a_max_of_255_characters()
-    {
-        $this->post(route('email-list.store'), ['title' => str_repeat('*', 256)])
-            ->assertSessionHasErrors(['title' => 'The title field must not be greater than 255 characters.']);
-    }
+test('file should be required', function () {
+    post(route('email-list.store'), [])
+        ->assertSessionHasErrors(['file' => 'The file field is required.']);
+});
 
-    public function test_file_should_be_required()
-    {
-        $this->post(route('email-list.store'), [])
-            ->assertSessionHasErrors(['file' => 'The file field is required.']);
-    }
-
-    public function test_it_should_be_able_create_an_email_list()
-    {
-        // Arrange
-        $data = [
-            'title' => 'Email List Test',
-            'file' => UploadedFile::fake()->createWithContent(
-                'sample_names.csv',
-                <<<'CSV'
+test('it should be able create an email list', function () {
+    // Arrange
+    $data = [
+        'title' => 'Email List Test',
+        'file' => UploadedFile::fake()->createWithContent(
+            'sample_names.csv',
+            <<<'CSV'
                 Name,Email
                 Joe Doe,joe@doe.com
                 CSV
-            ),
-        ];
+        ),
+    ];
 
-        // Act
-        $request = $this->post(route('email-list.store'), $data);
+    // Act
+    $response = post(route('email-list.store'), $data);
 
-        // Assert
-        $request->assertRedirectToRoute('email-list.index');
+    // Assert
+    $response->assertRedirect(route('email-list.index'));
 
-        $this->assertDatabaseHas('email_lists', [
-            'title' => 'Email List Test',
-        ]);
+    assertDatabaseHas('email_lists', [
+        'title' => 'Email List Test',
+    ]);
 
-        $this->assertDatabaseHas('subscribers', [
-            'email_list_id' => 1,
-            'name' => 'Joe Doe',
-            'email' => 'joe@doe.com',
-        ]);
-    }
-}
+    assertDatabaseHas('subscribers', [
+        'email_list_id' => 1,
+        'name' => 'Joe Doe',
+        'email' => 'joe@doe.com',
+    ]);
+});

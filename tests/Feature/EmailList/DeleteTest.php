@@ -1,30 +1,28 @@
 <?php
 
-use Tests\TestCase;
 use App\Models\EmailList;
 use App\Models\Subscriber;
+use function Pest\Laravel\{delete, assertSoftDeleted};
 
-class DeleteTest extends TestCase
-{
-    public function test_it_should_be_able_to_delete_an_email_list()
-    {
-        // Arrange
+pest()->group('email-list');
 
-        $this->login();
-        $emailList = EmailList::factory()->create();
-        $subscribers = Subscriber::factory()->count(10)->create(['email_list_id' => $emailList->id]);
+it('test it should be able to delete an email list', function() {
+    // Arrange
+    login();
 
+    $emailList = EmailList::factory()->create();
 
-        // Act
-        $response = $this->delete(route('email-list.delete', ['email_list' => $emailList->id]));
-        
-        // Assert
-        
-        $response->assertRedirectToRoute('email-list.index');
-        $this->assertSoftDeleted('email_lists', ['id' => $emailList->id]);
+    $subscribers = Subscriber::factory()->count(10)->create(['email_list_id' => $emailList->id]);
 
-        foreach ($subscribers as $subscriber) {
-            $this->assertSoftDeleted('subscribers', ['id' => $subscriber->id]);
-        }
+    // Act
+    $response = delete(route('email-list.delete', ['emailList' => $emailList]));
+
+    // Assert
+    $response->assertRedirect(route('email-list.index'));
+
+    assertSoftDeleted('email_lists', ['id' => $emailList->id]);
+
+    foreach($subscribers as $subscriber) {
+        assertSoftDeleted('subscribers', ['id' => $subscriber->id]);
     }
-}
+});

@@ -1,67 +1,59 @@
 <?php
 
-namespace Tests\Feature\EmailList;
-
 use App\Models\EmailList;
-use App\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Tests\TestCase;
+use Illuminate\Support\Facades\Auth;
 
-class ListTest extends TestCase {
-    public function test_needs_to_be_authenticated()
-    {
-        $this->getJson(route('email-list.index'))->assertUnauthorized();
+use function Pest\Laravel\{get, getJson};
 
-        $this->login();
+pest()->group('email-list');
 
-        $this->get(route('email-list.index'))->assertSuccessful();
-    }
+beforeEach(function () {
+    login();
+});
 
-    public function test_it_should_be_paginate()
-    {
-        // Arrange
-       
-        $this->login();
+test('needs to be authenticated', function () {
+    Auth::logout();
 
+    getJson(route('email-list.index'))->assertUnauthorized();
 
+    login();
 
-        EmailList::factory()->count(40)->create();
-        
-        // Act
-        $response = $this->get(route('email-list.index'));
+    get(route('email-list.index'))->assertSuccessful();
+});
 
-        // Asset
-        $response->assertViewHas('emailLists', function($list) {
-            $this->assertInstanceOf(LengthAwarePaginator::class, $list);
+test('it should be paginate', function () {
+    // Arrange
+    EmailList::factory()->count(40)->create();
 
-            $this->assertCount(5, $list);
+    // Act
+    $response = get(route('email-list.index'));
 
-            return true;
-        });
-    }
+    // Asset
+    $response->assertViewHas('emailLists', function($list) {
+        expect($list)->toBeInstanceOf(LengthAwarePaginator::class);
 
-    public function test_it_should_be_able_to_search_a_list()
-    {
-        // Arrange
-      
-        $this->login();
+        expect($list)->toHaveCount(5);
 
+        return true;
+    });
+});
 
-        EmailList::factory()->count(10)->create();
-        EmailList::factory()->create(['title' => 'Title 1']);
-        $emailList = EmailList::factory()->create(['title' => 'Title Testing 2']);
-        
-        // Act
-        $response = $this->get(route('email-list.index', ['search' => 'Testing 2']));
+test('it should be able to search a list', function () {
+    // Arrange
+    EmailList::factory()->count(10)->create();
+    EmailList::factory()->create(['title' => 'Title 1']);
+    $emailList = EmailList::factory()->create(['title' => 'Title Testing 2']);
 
-        //Asset
-        $response->assertViewHas('emailLists', function($list) use ($emailList) {
-            $this->assertCount(1, $list);
+    // Act
+    $response = get(route('email-list.index', ['search' => 'Testing 2']));
 
-            $this->assertEquals($emailList->id, $list->first()->id);
+    //Asset
+    $response->assertViewHas('emailLists', function($list) use ($emailList) {
+        expect($list)->toHaveCount(1);
 
-            return true;
-        });
-    }
-}
+        expect($list->first()->id)->toEqual($emailList->id);
+
+        return true;
+    });
+});

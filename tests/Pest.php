@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use function Pest\Laravel\{actingAs};
 use Tests\TestCase;
 
 /*
@@ -15,7 +18,7 @@ use Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)
- // ->use(RefreshDatabase::class)
+    ->use(RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -44,7 +47,12 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function login(): User|Authenticatable
 {
-    // ..
+    /** @var User|Authenticatable $user */
+    $user = User::factory()->create();
+
+    actingAs($user);
+
+    return $user;
 }

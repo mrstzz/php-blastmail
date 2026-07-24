@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/email-list', [EmailListController::class, 'index'])->name('email-list.index');
     Route::get('/email-list/create', [EmailListController::class, 'create'])->name('email-list.create');
     Route::post('/email-list/store', [EmailListController::class, 'store'])->name('email-list.store');
-    Route::delete('/email-list/{email_list}', [EmailListController::class, 'destroy'])->name('email-list.delete');
+    Route::delete('/email-list/{emailList}', [EmailListController::class, 'destroy'])->name('email-list.delete');
     //endregion
 
     //region Subscriber
