@@ -84,8 +84,9 @@ class CampaignStoreRequest extends FormRequest
         }
 
         if(filled($session['template_id']) && blank($session['body'])) {
+
             $template = Template::find($session['template_id']);
-            $session['body'] = $template->body;
+            $session['body'] = $template?->body;
         }
 
 
