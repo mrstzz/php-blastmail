@@ -2,6 +2,13 @@
 
 
 
+beforeEach(function () {
+    login();
+
+    $this->route = route('campaigns.create');
+});
+
+
 
 
 test('when saving we need to update campaigns::create session to have all the data', function () {})->todo();
@@ -11,6 +18,8 @@ test('it should have on the view a list of templates', function () {})->todo();
 test('it should have on the view a blank tab variable', function () {})->todo();
 test('it should have on the view the form variable set to _config', function () {})->todo();
 test('it should have on the view all the data in the variable data', function () {})->todo();
+
+test('if session is clear the variable data should have default values', function () {})->todo();
 
 // 
 
