@@ -71,6 +71,13 @@ class CampaignStoreRequest extends FormRequest
 
         $session = session('campaign', $map);
 
+
+        foreach ($map as $key => $value) {
+            if (! is_null($value)) {
+                $session[$key] = $value;
+            }
+        }
+
         foreach($session as $key => $value) {
             $newValue = data_get($session, $key);
 
