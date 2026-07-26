@@ -27,6 +27,8 @@ it('should increment clicks on the database if the campaign is tracking clicks',
     expect($this->mail)->refresh()->clicks->toBe(1);
 });
 
+
+
 it('should not increment clicks on the database if the campaign is not tracking clicks', function() {
     $this->campaign->update(['track_click' => false]);
 
@@ -34,6 +36,9 @@ it('should not increment clicks on the database if the campaign is not tracking 
 
     expect($this->mail)->refresh()->clicks->toBe(0);
 });
+
+
+
 
 it('should redirect the user for the given url', function() {
     get(route('tracking.clicks', ['mail' => $this->mail, 'f' => 'https://www.google.com']))

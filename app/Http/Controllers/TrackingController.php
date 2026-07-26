@@ -11,7 +11,7 @@ class TrackingController extends Controller
     {
         
         if($mail->campaign->track_open){
-            $mail->openings ++;
+            $mail->openings++;
             $mail->save();
         }
 
@@ -25,8 +25,10 @@ class TrackingController extends Controller
 
     public function clicks(CampaignMail $mail)
     {
-        $mail->clicks ++;
-        $mail->save();
+        if($mail->campaign->track_click){
+            $mail->clicks++;
+            $mail->save();
+        }
 
         return redirect()->away(
             request()->get('f')
