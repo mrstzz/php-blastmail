@@ -2,9 +2,9 @@
     <x-alert noIcon success :title="__('Your campaign was sent to ' . $query['total_subscribers'] . ' subscribers.')" />
 
     <div class="grid grid-cols-3 gap-5">
-        <x-dashboard.card heading="{{ $query['total_openings'] }}" subheading="{{ __('Opens') }}" />
-        <x-dashboard.card heading="{{ $query['unique_opens'] }}" subheading="{{ __('Unique Opens') }}" />
-        <x-dashboard.card heading="{{ $query['openings_rate'] }}%" subheading="{{ __('Open Rate') }}" />
+        <x-dashboard.card heading="{{ $query['total_openings'] }}" subheading="{{ __('Openings') }}" />
+        <x-dashboard.card heading="{{ $query['unique_openings'] }}" subheading="{{ __('Unique Openings') }}" />
+        <x-dashboard.card heading="{{ $query['openings_rate'] }}%" subheading="{{ __('Openings Rate') }}" />
         <x-dashboard.card heading="{{ $query['total_clicks'] }}" subheading="{{ __('Clicks') }}" />
         <x-dashboard.card heading="{{ $query['unique_clicks'] }}" subheading="{{ __('Unique Clicks') }}" />
         <x-dashboard.card heading="{{ $query['clicks_rate'] }}%" subheading="{{ __('Clicks Rate') }}" />
